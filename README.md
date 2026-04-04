@@ -66,15 +66,6 @@ task dev
 wails3 dev -config ./build/config.yml
 ```
 
-## 发布
-
-推送版本标签即可触发 GitHub Actions 自动编译并发布到 Releases：
-
-```bash
-git tag v1.0.0
-git push origin v1.0.0
-```
-
 ## 技术栈
 
 - **后端**：Go + [Wails v3](https://v3alpha.wails.io/) + GORM + SQLite
