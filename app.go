@@ -7,10 +7,10 @@ import (
 	"time"
 
 	"gorm.io/gorm"
-	imapClient "mailstore/internal/imap"
-	"mailstore/internal/models"
-	"mailstore/internal/oauth"
-	"mailstore/internal/store"
+	imapClient "mailvault/internal/imap"
+	"mailvault/internal/models"
+	"mailvault/internal/oauth"
+	"mailvault/internal/store"
 )
 
 // MailService is the Wails service exposing all app methods to the frontend.

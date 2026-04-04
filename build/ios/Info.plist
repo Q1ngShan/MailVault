@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleExecutable</key>
-    <string>mailstore_v3</string>
+    <string>mailvault</string>
     <key>CFBundleIdentifier</key>
-    <string>com.example.mailstorev3</string>
+    <string>com.mailvault.app</string>
     <key>CFBundleName</key>
     <string>My Product</string>
     <key>CFBundleDisplayName</key>

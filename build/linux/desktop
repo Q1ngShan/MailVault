@@ -1,13 +1,13 @@
 [Desktop Entry]
 Version=1.0
 Name=My Product
-Comment=A mailstore_v3 application
+Comment=A mailvault application
 # The Exec line includes %u to pass the URL to the application
-Exec=/usr/local/bin/mailstore_v3 %u
+Exec=/usr/local/bin/mailvault %u
 Terminal=false
 Type=Application
-Icon=mailstore_v3
+Icon=mailvault
 Categories=Utility;
-StartupWMClass=mailstore_v3
+StartupWMClass=mailvault
 
  

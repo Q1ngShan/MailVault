@@ -7,7 +7,7 @@ import {
   GetAccountTypes, CreateAccountType, UpdateAccountType, DeleteAccountType,
   ArchiveAccount, ArchiveAllAccounts,
   CheckAllAccounts, DeleteDeadAccounts
-} from '../../bindings/mailstore/mailservice'
+} from '../../bindings/mailvault/mailservice'
 
 const emit = defineEmits(['view-mail'])
 

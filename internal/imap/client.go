@@ -10,7 +10,7 @@ import (
 	goimap "github.com/emersion/go-imap"
 	"github.com/emersion/go-imap/client"
 	"github.com/emersion/go-message/mail"
-	"mailstore/internal/models"
+	"mailvault/internal/models"
 )
 
 const imapServer = "outlook.live.com:993"

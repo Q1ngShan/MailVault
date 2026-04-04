@@ -8,7 +8,7 @@ import (
 	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"mailstore/internal/store"
+	"mailvault/internal/store"
 )
 
 func GetDBPath() string {
@@ -25,7 +25,7 @@ func GetDBPath() string {
 		home, _ := os.UserHomeDir()
 		dataDir = filepath.Join(home, ".config")
 	}
-	return filepath.Join(dataDir, "mailstore", "mailstore.db")
+	return filepath.Join(dataDir, "mailvault", "mailvault.db")
 }
 
 func Init() (*gorm.DB, error) {

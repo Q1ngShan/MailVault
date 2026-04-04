@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/wailsapp/wails/v3/pkg/application"
-	"mailstore/internal/db"
+	"mailvault/internal/db"
 )
 
 //go:embed all:frontend/dist
@@ -20,7 +20,7 @@ func main() {
 	mailService := NewMailService(database)
 
 	app := application.New(application.Options{
-		Name:        "MailStore",
+		Name:        "MailVault",
 		Description: "Outlook mail account manager",
 		Services: []application.Service{
 			application.NewService(mailService),
@@ -34,7 +34,7 @@ func main() {
 	})
 
 	app.Window.NewWithOptions(application.WebviewWindowOptions{
-		Title:     "MailStore",
+		Title:     "MailVault",
 		Width:     1280,
 		Height:    800,
 		MinWidth:  900,

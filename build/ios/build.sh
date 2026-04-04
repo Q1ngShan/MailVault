@@ -2,8 +2,8 @@
 set -e
 
 # Build configuration
-APP_NAME="mailstore_v3"
-BUNDLE_ID="com.example.mailstorev3"
+APP_NAME="mailvault"
+BUNDLE_ID="com.mailvault.app"
 VERSION="0.1.0"
 BUILD_NUMBER="0.1.0"
 BUILD_DIR="build/ios"

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive, watch, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import { GetMails, GetMailDetail } from '../../bindings/mailstore/mailservice'
+import { GetMails, GetMailDetail } from '../../bindings/mailvault/mailservice'
 
 const props = defineProps({
   account: { type: Object, required: true }

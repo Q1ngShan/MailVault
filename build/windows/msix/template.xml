@@ -8,7 +8,7 @@
         AllowPromptForPassword="false">
     </Settings>
     <Installer
-        Path="mailstore_v3"
+        Path="mailvault"
         Arguments=""
         InstallLocation="C:\Program Files\My Company\My Product">
     </Installer>
@@ -18,17 +18,17 @@
         PublisherName="CN=My Company"
         PublisherDisplayName="My Company"
         Version="0.1.0.0"
-        PackageDescription="A mailstore_v3 application">
+        PackageDescription="A mailvault application">
         <Capabilities>
             <Capability Name="runFullTrust" />
             
         </Capabilities>
         <Applications>
             <Application
-                Id="com.example.mailstorev3"
-                Description="A mailstore_v3 application"
+                Id="com.mailvault.app"
+                Description="A mailvault application"
                 DisplayName="My Product"
-                ExecutableName="mailstore_v3"
+                ExecutableName="mailvault"
                 EntryPoint="Windows.FullTrustApplication">
                 
             </Application>
@@ -43,11 +43,11 @@
             <Framework>false</Framework>
             <DisplayName>My Product</DisplayName>
             <PublisherDisplayName>My Company</PublisherDisplayName>
-            <Description>A mailstore_v3 application</Description>
+            <Description>A mailvault application</Description>
             <Logo>Assets\AppIcon.png</Logo>
         </Properties>
     </PackageInformation>
-    <SaveLocation PackagePath="mailstore_v3.msix" />
+    <SaveLocation PackagePath="mailvault.msix" />
     <PackageIntegrity>
         <CertificatePath></CertificatePath>
     </PackageIntegrity>

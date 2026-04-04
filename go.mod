@@ -1,4 +1,4 @@
-module mailstore
+module mailvault
 
 go 1.25
 

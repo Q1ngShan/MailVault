@@ -18,7 +18,7 @@ function openMailView(account) {
       <el-header class="app-header">
         <div class="header-title">
           <el-icon size="20"><Message /></el-icon>
-          <span>MailStore</span>
+          <span>MailVault</span>
         </div>
         <div class="header-nav">
           <el-button
