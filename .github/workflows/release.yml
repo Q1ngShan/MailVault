@@ -78,7 +78,7 @@ jobs:
   # ── macOS amd64 (Intel) ────────────────────────────────────────────────────
   build-macos-amd64:
     name: macOS (Intel)
-    runs-on: macos-13          # x86_64 runner
+    runs-on: macos-14          # cross-compile amd64 on Apple Silicon
     steps:
       - uses: actions/checkout@v4
 
@@ -108,6 +108,7 @@ jobs:
       - name: Build binary
         run: |
           CGO_ENABLED=1 GOARCH=amd64 \
+            CC="clang -target x86_64-apple-macos10.15" \
             go build -tags production -trimpath -buildvcs=false \
             -ldflags="-w -s" \
             -o bin/mailvault-macos-amd64 .
