@@ -1,19 +1,83 @@
-# README
+# MailStore
 
-## About
+Outlook 邮箱账号管理工具，支持 OAuth2 令牌刷新与 IMAP 邮件读取。
 
-This is the official Wails Vue template.
+基于 [Wails v3](https://v3alpha.wails.io/) + Vue 3 + Element Plus 构建的跨平台桌面应用。
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
+## 功能
 
-## Live Development
+- 账号管理：新增、编辑、删除、归档
+- 批量导入 / 导出（`email----password----client_id----refresh_token` 格式）
+- OAuth2 令牌刷新（单个 / 全量）
+- IMAP 邮件读取（收件箱 / 垃圾邮件）
+- 一键存活检测 + 一键删除失效账号
+- 账号类型自定义（颜色标签分组）
 
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
+## 下载
 
-## Building
+前往 [Releases](../../releases) 页面下载对应平台的预编译包：
 
-To build a redistributable, production mode package, use `wails build`.
+| 平台 | 文件 |
+|------|------|
+| macOS Apple Silicon | `MailStore-macos-arm64.zip` |
+| macOS Intel | `MailStore-macos-amd64.zip` |
+| Windows x64 | `MailStore-windows-amd64.exe` |
+| Linux x64 | `MailStore-linux-amd64.tar.gz` |
+
+> **macOS 首次运行**：解压后将 `.app` 拖入应用程序文件夹，右键 → 打开（绕过 Gatekeeper）
+
+## 导入格式
+
+每行一条，字段间用 `----` 分隔：
+
+```
+email----password----client_id----refresh_token
+```
+
+## 本地构建
+
+**依赖：**
+- Go 1.21+
+- Node.js 20+
+- [Wails v3 CLI](https://v3alpha.wails.io/getting-started/installation/)
+
+```bash
+# 生成前端绑定
+wails3 generate bindings
+
+# 构建前端
+cd frontend && npm ci && npm run build && cd ..
+
+# 编译二进制
+CGO_ENABLED=1 go build -tags production -trimpath -ldflags="-w -s" -o bin/mailstore .
+```
+
+或直接运行脚本：
+
+```bash
+bash build.sh
+```
+
+**开发模式（热重载）：**
+
+```bash
+task dev
+# 或
+wails3 dev -config ./build/config.yml
+```
+
+## 发布
+
+推送版本标签即可触发 GitHub Actions 自动编译并发布到 Releases：
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+## 技术栈
+
+- **后端**：Go + [Wails v3](https://v3alpha.wails.io/) + GORM + SQLite
+- **前端**：Vue 3 + Element Plus + Vite
+- **认证**：Microsoft OAuth2 XOAUTH2
+- **邮件**：IMAP over TLS (`outlook.live.com:993`)
