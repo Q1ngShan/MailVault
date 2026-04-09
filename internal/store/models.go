@@ -7,6 +7,7 @@ type Account struct {
 	ID              uint       `gorm:"primaryKey"`
 	Email           string     `gorm:"uniqueIndex;not null"`
 	Password        string
+	CodexPassword   string
 	ClientID        string
 	RefreshToken    string
 	LastRefreshTime *time.Time

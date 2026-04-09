@@ -3,7 +3,6 @@ package db
 import (
 	"os"
 	"path/filepath"
-	"runtime"
 
 	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
@@ -12,20 +11,11 @@ import (
 )
 
 func GetDBPath() string {
-	var dataDir string
-	if runtime.GOOS == "windows" {
-		dataDir = os.Getenv("LOCALAPPDATA")
-		if dataDir == "" {
-			dataDir, _ = os.UserHomeDir()
-		}
-	} else if runtime.GOOS == "darwin" {
-		home, _ := os.UserHomeDir()
-		dataDir = filepath.Join(home, "Library", "Application Support")
-	} else {
-		home, _ := os.UserHomeDir()
-		dataDir = filepath.Join(home, ".config")
+	exe, err := os.Executable()
+	if err != nil {
+		return filepath.Join("config", "mailvault.db")
 	}
-	return filepath.Join(dataDir, "mailvault", "mailvault.db")
+	return filepath.Join(filepath.Dir(exe), "config", "mailvault.db")
 }
 
 func Init() (*gorm.DB, error) {

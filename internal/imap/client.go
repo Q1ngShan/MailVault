@@ -252,3 +252,191 @@ func decodeHeader(s string) string {
 	}
 	return decoded
 }
+
+// ─── OTP helpers for Codex OAuth email verification ──────────────────────────
+
+// otpFolders are the mailbox names checked when polling for OTP emails.
+// OpenAI verification emails are often filtered to Junk by Outlook.
+var otpFolders = []string{"INBOX", "Junk"}
+
+// SnapshotInboxUIDs returns the set of UID numbers currently in INBOX and Junk.
+// Used to detect new messages arriving after this call.
+func SnapshotInboxUIDs(email, accessToken string) (map[uint32]bool, error) {
+	c, err := connect(email, accessToken)
+	if err != nil {
+		return nil, err
+	}
+	defer c.Logout()
+
+	ids := make(map[uint32]bool)
+	for _, folder := range otpFolders {
+		mbox, err := c.Select(folder, true)
+		if err != nil {
+			continue // folder may not exist
+		}
+		if mbox.Messages == 0 {
+			continue
+		}
+		seqSet := new(goimap.SeqSet)
+		seqSet.AddRange(1, mbox.Messages)
+		msgs := make(chan *goimap.Message, 64)
+		done := make(chan error, 1)
+		go func() { done <- c.Fetch(seqSet, []goimap.FetchItem{goimap.FetchUid}, msgs) }()
+		for msg := range msgs {
+			ids[msg.Uid] = true
+		}
+		<-done
+	}
+	return ids, nil
+}
+
+// WaitForOTPCode polls INBOX and Junk for a new message containing a 6-digit OTP.
+// oldUIDs is the snapshot taken before triggering the email send.
+// Polls every 3 seconds until timeout.
+func WaitForOTPCode(email, accessToken string, oldUIDs map[uint32]bool, timeout time.Duration) (string, error) {
+	deadline := time.Now().Add(timeout)
+	for time.Now().Before(deadline) {
+		code, err := checkFoldersForOTP(email, accessToken, oldUIDs)
+		if err == nil && code != "" {
+			return code, nil
+		}
+		time.Sleep(3 * time.Second)
+	}
+	return "", fmt.Errorf("等待邮箱验证码超时（%v）", timeout)
+}
+
+func checkFoldersForOTP(email, accessToken string, oldUIDs map[uint32]bool) (string, error) {
+	c, err := connect(email, accessToken)
+	if err != nil {
+		return "", err
+	}
+	defer c.Logout()
+
+	for _, folder := range otpFolders {
+		code, err := checkFolderForOTP(c, folder, oldUIDs)
+		if err == nil && code != "" {
+			return code, nil
+		}
+	}
+	return "", nil
+}
+
+func checkFolderForOTP(c interface {
+	Select(name string, readOnly bool) (*goimap.MailboxStatus, error)
+	Fetch(seqSet *goimap.SeqSet, items []goimap.FetchItem, ch chan *goimap.Message) error
+}, folder string, oldUIDs map[uint32]bool) (string, error) {
+	mbox, err := c.Select(folder, true)
+	if err != nil {
+		return "", err
+	}
+	if mbox.Messages == 0 {
+		return "", nil
+	}
+
+	start := mbox.Messages
+	end := uint32(1)
+	if start > 20 {
+		end = start - 19
+	}
+
+	seqSet := new(goimap.SeqSet)
+	seqSet.AddRange(end, start)
+
+	section := &goimap.BodySectionName{}
+	items := []goimap.FetchItem{goimap.FetchUid, goimap.FetchEnvelope, section.FetchItem()}
+
+	msgs := make(chan *goimap.Message, 20)
+	done := make(chan error, 1)
+	go func() { done <- c.Fetch(seqSet, items, msgs) }()
+
+	var code string
+	for msg := range msgs {
+		if oldUIDs[msg.Uid] {
+			continue
+		}
+		// Prefer subject extraction: "Your OpenAI code is XXXXXX"
+		if msg.Envelope != nil {
+			if found := extractOTPFromSubject(msg.Envelope.Subject); found != "" {
+				code = found
+				continue
+			}
+		}
+		r := msg.GetBody(section)
+		if r == nil {
+			continue
+		}
+		body, _ := io.ReadAll(r)
+		if found := extractOTPFromBody(string(body)); found != "" {
+			code = found
+		}
+	}
+	<-done
+	return code, nil
+}
+
+// extractOTPFromSubject extracts a 6-digit code from subjects like
+// "Your OpenAI code is 123456" or "123456 is your verification code".
+func extractOTPFromSubject(subject string) string {
+	return findSixDigits(subject)
+}
+
+// ExtractOTPFromBody finds a 6-digit OTP code in an email body.
+func ExtractOTPFromBody(body string) string { return extractOTPFromBody(body) }
+
+// extractOTPFromBody finds a 6-digit OTP code in an email body.
+func extractOTPFromBody(body string) string {
+	// Strategy 1: OpenAI styled HTML block
+	if idx := strings.Index(body, "background-color:#F3F3F3"); idx != -1 {
+		block := body[idx:]
+		if end := strings.Index(block, "</p>"); end != -1 {
+			block = block[:end]
+			if code := findSixDigits(block); code != "" {
+				return code
+			}
+		}
+	}
+	// Strategy 2: between HTML tags
+	for i := 0; i < len(body)-7; i++ {
+		if body[i] == '>' {
+			j := i + 1
+			for j < len(body) && body[j] == ' ' {
+				j++
+			}
+			if j+6 <= len(body) && isDigits(body[j:j+6]) {
+				k := j + 6
+				for k < len(body) && body[k] == ' ' {
+					k++
+				}
+				if k < len(body) && body[k] == '<' && body[j:j+6] != "177010" {
+					return body[j : j+6]
+				}
+			}
+		}
+	}
+	// Strategy 3: standalone 6-digit number
+	return findSixDigits(body)
+}
+
+func findSixDigits(s string) string {
+	for i := 0; i+6 <= len(s); i++ {
+		if isDigits(s[i:i+6]) {
+			before := i == 0 || !isDigit(s[i-1])
+			after := i+6 >= len(s) || !isDigit(s[i+6])
+			if before && after && s[i:i+6] != "177010" {
+				return s[i : i+6]
+			}
+		}
+	}
+	return ""
+}
+
+func isDigits(s string) bool {
+	for _, c := range s {
+		if c < '0' || c > '9' {
+			return false
+		}
+	}
+	return len(s) > 0
+}
+
+func isDigit(c byte) bool { return c >= '0' && c <= '9' }

@@ -123,6 +123,62 @@ export function GetAccounts(query) {
 }
 
 /**
+ * GetCLIProxyAuthFiles fetches the list of auth files from CLIProxy management API.
+ * @returns {$CancellablePromise<models$0.CLIProxyAuthFilesResult>}
+ */
+export function GetCLIProxyAuthFiles() {
+    return $Call.ByID(1432658817).then(/** @type {($result: any) => any} */(($result) => {
+        return $$createType5($result);
+    }));
+}
+
+/**
+ * @returns {$CancellablePromise<models$0.CLIProxyConfig>}
+ */
+export function GetCLIProxyConfig() {
+    return $Call.ByID(3728079886).then(/** @type {($result: any) => any} */(($result) => {
+        return $$createType6($result);
+    }));
+}
+
+/**
+ * @returns {$CancellablePromise<models$0.CLIProxyStatus>}
+ */
+export function GetCLIProxyStatus() {
+    return $Call.ByID(4222384706).then(/** @type {($result: any) => any} */(($result) => {
+        return $$createType7($result);
+    }));
+}
+
+/**
+ * @returns {$CancellablePromise<models$0.CLIProxyUsage>}
+ */
+export function GetCLIProxyUsage() {
+    return $Call.ByID(4208925543).then(/** @type {($result: any) => any} */(($result) => {
+        return $$createType8($result);
+    }));
+}
+
+/**
+ * @returns {$CancellablePromise<models$0.CodexConfig>}
+ */
+export function GetCodexConfig() {
+    return $Call.ByID(1478919611).then(/** @type {($result: any) => any} */(($result) => {
+        return $$createType9($result);
+    }));
+}
+
+/**
+ * @param {number} id
+ * @returns {$CancellablePromise<models$0.CodexOAuthResult>}
+ */
+export function GetCodexOAuth(id) {
+    return $Call.ByID(176976792, id).then(/** @type {($result: any) => any} */(($result) => {
+        return $$createType10($result);
+    }));
+}
+
+/**
  * @param {number} accountID
  * @param {string} folder
  * @param {string} messageID
@@ -130,7 +186,7 @@ export function GetAccounts(query) {
  */
 export function GetMailDetail(accountID, folder, messageID) {
     return $Call.ByID(3818970004, accountID, folder, messageID).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType5($result);
+        return $$createType11($result);
     }));
 }
 
@@ -143,7 +199,7 @@ export function GetMailDetail(accountID, folder, messageID) {
  */
 export function GetMails(accountID, folder, page, pageSize) {
     return $Call.ByID(3016250402, accountID, folder, page, pageSize).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType6($result);
+        return $$createType12($result);
     }));
 }
 
@@ -154,7 +210,7 @@ export function GetMails(accountID, folder, page, pageSize) {
  */
 export function ImportAccounts(text) {
     return $Call.ByID(170311267, text).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType7($result);
+        return $$createType13($result);
     }));
 }
 
@@ -163,7 +219,7 @@ export function ImportAccounts(text) {
  */
 export function RefreshAllTokens() {
     return $Call.ByID(1526491722).then(/** @type {($result: any) => any} */(($result) => {
-        return $$createType8($result);
+        return $$createType14($result);
     }));
 }
 
@@ -173,6 +229,43 @@ export function RefreshAllTokens() {
  */
 export function RefreshToken(id) {
     return $Call.ByID(2301194854, id);
+}
+
+/**
+ * @param {models$0.CLIProxyConfig} cfg
+ * @returns {$CancellablePromise<void>}
+ */
+export function SaveCLIProxyConfig(cfg) {
+    return $Call.ByID(2626336199, cfg);
+}
+
+/**
+ * @param {models$0.CodexConfig} cfg
+ * @returns {$CancellablePromise<void>}
+ */
+export function SaveCodexConfig(cfg) {
+    return $Call.ByID(1868047508, cfg);
+}
+
+/**
+ * SaveCodexToken writes the given JSON content to the specified file path.
+ * @param {string} path
+ * @param {string} content
+ * @returns {$CancellablePromise<void>}
+ */
+export function SaveCodexToken(path, content) {
+    return $Call.ByID(32541199, path, content);
+}
+
+/**
+ * SyncCodexToken uploads the token JSON to CLIProxy via POST /v0/management/auth-files?name={email}.json
+ * @param {string} content
+ * @returns {$CancellablePromise<models$0.SyncResult>}
+ */
+export function SyncCodexToken(content) {
+    return $Call.ByID(2841730389, content).then(/** @type {($result: any) => any} */(($result) => {
+        return $$createType15($result);
+    }));
 }
 
 /**
@@ -203,7 +296,14 @@ const $$createType1 = models$0.AccountResponse.createFrom;
 const $$createType2 = models$0.AccountTypeResponse.createFrom;
 const $$createType3 = $Create.Array($$createType2);
 const $$createType4 = models$0.AccountsResponse.createFrom;
-const $$createType5 = models$0.MailDetailResponse.createFrom;
-const $$createType6 = models$0.MailListResponse.createFrom;
-const $$createType7 = models$0.ImportResult.createFrom;
-const $$createType8 = models$0.RefreshAllResult.createFrom;
+const $$createType5 = models$0.CLIProxyAuthFilesResult.createFrom;
+const $$createType6 = models$0.CLIProxyConfig.createFrom;
+const $$createType7 = models$0.CLIProxyStatus.createFrom;
+const $$createType8 = models$0.CLIProxyUsage.createFrom;
+const $$createType9 = models$0.CodexConfig.createFrom;
+const $$createType10 = models$0.CodexOAuthResult.createFrom;
+const $$createType11 = models$0.MailDetailResponse.createFrom;
+const $$createType12 = models$0.MailListResponse.createFrom;
+const $$createType13 = models$0.ImportResult.createFrom;
+const $$createType14 = models$0.RefreshAllResult.createFrom;
+const $$createType15 = models$0.SyncResult.createFrom;

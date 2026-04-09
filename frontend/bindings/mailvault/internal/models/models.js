@@ -47,6 +47,22 @@ export class AccountQuery {
              */
             this["active_only"] = false;
         }
+        if (!("sort_by" in $$source)) {
+            /**
+             * id | account_type | last_refresh | email
+             * @member
+             * @type {string}
+             */
+            this["sort_by"] = "";
+        }
+        if (!("sort_order" in $$source)) {
+            /**
+             * asc | desc
+             * @member
+             * @type {string}
+             */
+            this["sort_order"] = "";
+        }
 
         Object.assign(this, $$source);
     }
@@ -91,6 +107,13 @@ export class AccountResponse {
              * @type {string}
              */
             this["password"] = "";
+        }
+        if (!("codex_password" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["codex_password"] = "";
         }
         if (!("client_id" in $$source)) {
             /**
@@ -258,6 +281,460 @@ export class AccountsResponse {
     }
 }
 
+export class CLIProxyAPIStats {
+    /**
+     * Creates a new CLIProxyAPIStats instance.
+     * @param {Partial<CLIProxyAPIStats>} [$$source = {}] - The source object to create the CLIProxyAPIStats.
+     */
+    constructor($$source = {}) {
+        if (!("total_requests" in $$source)) {
+            /**
+             * @member
+             * @type {number}
+             */
+            this["total_requests"] = 0;
+        }
+        if (!("total_tokens" in $$source)) {
+            /**
+             * @member
+             * @type {number}
+             */
+            this["total_tokens"] = 0;
+        }
+        if (!("models" in $$source)) {
+            /**
+             * @member
+             * @type {{ [_ in string]?: CLIProxyModelStats }}
+             */
+            this["models"] = {};
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new CLIProxyAPIStats instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {CLIProxyAPIStats}
+     */
+    static createFrom($$source = {}) {
+        const $$createField2_0 = $$createType3;
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        if ("models" in $$parsedSource) {
+            $$parsedSource["models"] = $$createField2_0($$parsedSource["models"]);
+        }
+        return new CLIProxyAPIStats(/** @type {Partial<CLIProxyAPIStats>} */($$parsedSource));
+    }
+}
+
+export class CLIProxyAuthFile {
+    /**
+     * Creates a new CLIProxyAuthFile instance.
+     * @param {Partial<CLIProxyAuthFile>} [$$source = {}] - The source object to create the CLIProxyAuthFile.
+     */
+    constructor($$source = {}) {
+        if (!("id" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["id"] = "";
+        }
+        if (!("auth_index" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["auth_index"] = "";
+        }
+        if (!("name" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["name"] = "";
+        }
+        if (!("type" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["type"] = "";
+        }
+        if (!("provider" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["provider"] = "";
+        }
+        if (!("label" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["label"] = "";
+        }
+        if (!("status" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["status"] = "";
+        }
+        if (!("status_message" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["status_message"] = "";
+        }
+        if (!("disabled" in $$source)) {
+            /**
+             * @member
+             * @type {boolean}
+             */
+            this["disabled"] = false;
+        }
+        if (!("unavailable" in $$source)) {
+            /**
+             * @member
+             * @type {boolean}
+             */
+            this["unavailable"] = false;
+        }
+        if (!("runtime_only" in $$source)) {
+            /**
+             * @member
+             * @type {boolean}
+             */
+            this["runtime_only"] = false;
+        }
+        if (!("source" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["source"] = "";
+        }
+        if (!("size" in $$source)) {
+            /**
+             * @member
+             * @type {number}
+             */
+            this["size"] = 0;
+        }
+        if (/** @type {any} */(false)) {
+            /**
+             * @member
+             * @type {string | undefined}
+             */
+            this["email"] = undefined;
+        }
+        if (/** @type {any} */(false)) {
+            /**
+             * @member
+             * @type {string | undefined}
+             */
+            this["account_type"] = undefined;
+        }
+        if (/** @type {any} */(false)) {
+            /**
+             * @member
+             * @type {string | undefined}
+             */
+            this["account"] = undefined;
+        }
+        if (/** @type {any} */(false)) {
+            /**
+             * @member
+             * @type {string | undefined}
+             */
+            this["created_at"] = undefined;
+        }
+        if (/** @type {any} */(false)) {
+            /**
+             * @member
+             * @type {string | undefined}
+             */
+            this["updated_at"] = undefined;
+        }
+        if (/** @type {any} */(false)) {
+            /**
+             * @member
+             * @type {string | undefined}
+             */
+            this["last_refresh"] = undefined;
+        }
+        if (/** @type {any} */(false)) {
+            /**
+             * @member
+             * @type {string | undefined}
+             */
+            this["next_retry_after"] = undefined;
+        }
+        if (/** @type {any} */(false)) {
+            /**
+             * @member
+             * @type {string | undefined}
+             */
+            this["path"] = undefined;
+        }
+        if (/** @type {any} */(false)) {
+            /**
+             * @member
+             * @type {number | undefined}
+             */
+            this["priority"] = undefined;
+        }
+        if (/** @type {any} */(false)) {
+            /**
+             * @member
+             * @type {string | undefined}
+             */
+            this["note"] = undefined;
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new CLIProxyAuthFile instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {CLIProxyAuthFile}
+     */
+    static createFrom($$source = {}) {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new CLIProxyAuthFile(/** @type {Partial<CLIProxyAuthFile>} */($$parsedSource));
+    }
+}
+
+export class CLIProxyAuthFilesResult {
+    /**
+     * Creates a new CLIProxyAuthFilesResult instance.
+     * @param {Partial<CLIProxyAuthFilesResult>} [$$source = {}] - The source object to create the CLIProxyAuthFilesResult.
+     */
+    constructor($$source = {}) {
+        if (!("files" in $$source)) {
+            /**
+             * @member
+             * @type {CLIProxyAuthFile[]}
+             */
+            this["files"] = [];
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new CLIProxyAuthFilesResult instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {CLIProxyAuthFilesResult}
+     */
+    static createFrom($$source = {}) {
+        const $$createField0_0 = $$createType5;
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        if ("files" in $$parsedSource) {
+            $$parsedSource["files"] = $$createField0_0($$parsedSource["files"]);
+        }
+        return new CLIProxyAuthFilesResult(/** @type {Partial<CLIProxyAuthFilesResult>} */($$parsedSource));
+    }
+}
+
+export class CLIProxyConfig {
+    /**
+     * Creates a new CLIProxyConfig instance.
+     * @param {Partial<CLIProxyConfig>} [$$source = {}] - The source object to create the CLIProxyConfig.
+     */
+    constructor($$source = {}) {
+        if (!("url" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["url"] = "";
+        }
+        if (!("api_key" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["api_key"] = "";
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new CLIProxyConfig instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {CLIProxyConfig}
+     */
+    static createFrom($$source = {}) {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new CLIProxyConfig(/** @type {Partial<CLIProxyConfig>} */($$parsedSource));
+    }
+}
+
+export class CLIProxyModelStats {
+    /**
+     * Creates a new CLIProxyModelStats instance.
+     * @param {Partial<CLIProxyModelStats>} [$$source = {}] - The source object to create the CLIProxyModelStats.
+     */
+    constructor($$source = {}) {
+        if (!("total_requests" in $$source)) {
+            /**
+             * @member
+             * @type {number}
+             */
+            this["total_requests"] = 0;
+        }
+        if (!("total_tokens" in $$source)) {
+            /**
+             * @member
+             * @type {number}
+             */
+            this["total_tokens"] = 0;
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new CLIProxyModelStats instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {CLIProxyModelStats}
+     */
+    static createFrom($$source = {}) {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new CLIProxyModelStats(/** @type {Partial<CLIProxyModelStats>} */($$parsedSource));
+    }
+}
+
+export class CLIProxyStatus {
+    /**
+     * Creates a new CLIProxyStatus instance.
+     * @param {Partial<CLIProxyStatus>} [$$source = {}] - The source object to create the CLIProxyStatus.
+     */
+    constructor($$source = {}) {
+        if (!("connected" in $$source)) {
+            /**
+             * @member
+             * @type {boolean}
+             */
+            this["connected"] = false;
+        }
+        if (!("stats_enabled" in $$source)) {
+            /**
+             * @member
+             * @type {boolean}
+             */
+            this["stats_enabled"] = false;
+        }
+        if (!("error" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["error"] = "";
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new CLIProxyStatus instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {CLIProxyStatus}
+     */
+    static createFrom($$source = {}) {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new CLIProxyStatus(/** @type {Partial<CLIProxyStatus>} */($$parsedSource));
+    }
+}
+
+export class CLIProxyUsage {
+    /**
+     * Creates a new CLIProxyUsage instance.
+     * @param {Partial<CLIProxyUsage>} [$$source = {}] - The source object to create the CLIProxyUsage.
+     */
+    constructor($$source = {}) {
+        if (!("total_requests" in $$source)) {
+            /**
+             * @member
+             * @type {number}
+             */
+            this["total_requests"] = 0;
+        }
+        if (!("success_count" in $$source)) {
+            /**
+             * @member
+             * @type {number}
+             */
+            this["success_count"] = 0;
+        }
+        if (!("failure_count" in $$source)) {
+            /**
+             * @member
+             * @type {number}
+             */
+            this["failure_count"] = 0;
+        }
+        if (!("total_tokens" in $$source)) {
+            /**
+             * @member
+             * @type {number}
+             */
+            this["total_tokens"] = 0;
+        }
+        if (!("requests_by_day" in $$source)) {
+            /**
+             * @member
+             * @type {{ [_ in string]?: number }}
+             */
+            this["requests_by_day"] = {};
+        }
+        if (!("tokens_by_day" in $$source)) {
+            /**
+             * @member
+             * @type {{ [_ in string]?: number }}
+             */
+            this["tokens_by_day"] = {};
+        }
+        if (!("apis" in $$source)) {
+            /**
+             * @member
+             * @type {{ [_ in string]?: CLIProxyAPIStats }}
+             */
+            this["apis"] = {};
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new CLIProxyUsage instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {CLIProxyUsage}
+     */
+    static createFrom($$source = {}) {
+        const $$createField4_0 = $$createType6;
+        const $$createField5_0 = $$createType6;
+        const $$createField6_0 = $$createType8;
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        if ("requests_by_day" in $$parsedSource) {
+            $$parsedSource["requests_by_day"] = $$createField4_0($$parsedSource["requests_by_day"]);
+        }
+        if ("tokens_by_day" in $$parsedSource) {
+            $$parsedSource["tokens_by_day"] = $$createField5_0($$parsedSource["tokens_by_day"]);
+        }
+        if ("apis" in $$parsedSource) {
+            $$parsedSource["apis"] = $$createField6_0($$parsedSource["apis"]);
+        }
+        return new CLIProxyUsage(/** @type {Partial<CLIProxyUsage>} */($$parsedSource));
+    }
+}
+
 export class CheckAllResult {
     /**
      * Creates a new CheckAllResult instance.
@@ -302,7 +779,7 @@ export class CheckAllResult {
      * @returns {CheckAllResult}
      */
     static createFrom($$source = {}) {
-        const $$createField3_0 = $$createType3;
+        const $$createField3_0 = $$createType10;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("results" in $$parsedSource) {
             $$parsedSource["results"] = $$createField3_0($$parsedSource["results"]);
@@ -363,6 +840,90 @@ export class CheckResult {
     }
 }
 
+export class CodexConfig {
+    /**
+     * Creates a new CodexConfig instance.
+     * @param {Partial<CodexConfig>} [$$source = {}] - The source object to create the CodexConfig.
+     */
+    constructor($$source = {}) {
+        if (!("proxy" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["proxy"] = "";
+        }
+        if (!("oauth_client_id" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["oauth_client_id"] = "";
+        }
+        if (!("oauth_redirect_uri" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["oauth_redirect_uri"] = "";
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new CodexConfig instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {CodexConfig}
+     */
+    static createFrom($$source = {}) {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new CodexConfig(/** @type {Partial<CodexConfig>} */($$parsedSource));
+    }
+}
+
+export class CodexOAuthResult {
+    /**
+     * Creates a new CodexOAuthResult instance.
+     * @param {Partial<CodexOAuthResult>} [$$source = {}] - The source object to create the CodexOAuthResult.
+     */
+    constructor($$source = {}) {
+        if (!("success" in $$source)) {
+            /**
+             * @member
+             * @type {boolean}
+             */
+            this["success"] = false;
+        }
+        if (!("json" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["json"] = "";
+        }
+        if (!("error" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["error"] = "";
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new CodexOAuthResult instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {CodexOAuthResult}
+     */
+    static createFrom($$source = {}) {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new CodexOAuthResult(/** @type {Partial<CodexOAuthResult>} */($$parsedSource));
+    }
+}
+
 export class CreateAccountRequest {
     /**
      * Creates a new CreateAccountRequest instance.
@@ -382,6 +943,13 @@ export class CreateAccountRequest {
              * @type {string}
              */
             this["password"] = "";
+        }
+        if (!("codex_password" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["codex_password"] = "";
         }
         if (!("client_id" in $$source)) {
             /**
@@ -512,7 +1080,7 @@ export class ImportResult {
      * @returns {ImportResult}
      */
     static createFrom($$source = {}) {
-        const $$createField3_0 = $$createType4;
+        const $$createField3_0 = $$createType11;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("errors" in $$parsedSource) {
             $$parsedSource["errors"] = $$createField3_0($$parsedSource["errors"]);
@@ -635,7 +1203,7 @@ export class MailDetailResponse {
      * @returns {MailDetailResponse}
      */
     static createFrom($$source = {}) {
-        const $$createField4_0 = $$createType5;
+        const $$createField4_0 = $$createType12;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("detail" in $$parsedSource) {
             $$parsedSource["detail"] = $$createField4_0($$parsedSource["detail"]);
@@ -765,7 +1333,7 @@ export class MailListResponse {
      * @returns {MailListResponse}
      */
     static createFrom($$source = {}) {
-        const $$createField6_0 = $$createType7;
+        const $$createField6_0 = $$createType14;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("items" in $$parsedSource) {
             $$parsedSource["items"] = $$createField6_0($$parsedSource["items"]);
@@ -818,12 +1386,47 @@ export class RefreshAllResult {
      * @returns {RefreshAllResult}
      */
     static createFrom($$source = {}) {
-        const $$createField3_0 = $$createType4;
+        const $$createField3_0 = $$createType11;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("errors" in $$parsedSource) {
             $$parsedSource["errors"] = $$createField3_0($$parsedSource["errors"]);
         }
         return new RefreshAllResult(/** @type {Partial<RefreshAllResult>} */($$parsedSource));
+    }
+}
+
+export class SyncResult {
+    /**
+     * Creates a new SyncResult instance.
+     * @param {Partial<SyncResult>} [$$source = {}] - The source object to create the SyncResult.
+     */
+    constructor($$source = {}) {
+        if (!("success" in $$source)) {
+            /**
+             * @member
+             * @type {boolean}
+             */
+            this["success"] = false;
+        }
+        if (!("error" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["error"] = "";
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new SyncResult instance from a string or object.
+     * @param {any} [$$source = {}]
+     * @returns {SyncResult}
+     */
+    static createFrom($$source = {}) {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new SyncResult(/** @type {Partial<SyncResult>} */($$parsedSource));
     }
 }
 
@@ -846,6 +1449,13 @@ export class UpdateAccountRequest {
              * @type {string}
              */
             this["password"] = "";
+        }
+        if (!("codex_password" in $$source)) {
+            /**
+             * @member
+             * @type {string}
+             */
+            this["codex_password"] = "";
         }
         if (!("client_id" in $$source)) {
             /**
@@ -942,9 +1552,16 @@ export class UpdateTypeRequest {
 // Private type creation functions
 const $$createType0 = AccountResponse.createFrom;
 const $$createType1 = $Create.Array($$createType0);
-const $$createType2 = CheckResult.createFrom;
-const $$createType3 = $Create.Array($$createType2);
-const $$createType4 = $Create.Array($Create.Any);
-const $$createType5 = MailDetail.createFrom;
-const $$createType6 = MailItem.createFrom;
-const $$createType7 = $Create.Array($$createType6);
+const $$createType2 = CLIProxyModelStats.createFrom;
+const $$createType3 = $Create.Map($Create.Any, $$createType2);
+const $$createType4 = CLIProxyAuthFile.createFrom;
+const $$createType5 = $Create.Array($$createType4);
+const $$createType6 = $Create.Map($Create.Any, $Create.Any);
+const $$createType7 = CLIProxyAPIStats.createFrom;
+const $$createType8 = $Create.Map($Create.Any, $$createType7);
+const $$createType9 = CheckResult.createFrom;
+const $$createType10 = $Create.Array($$createType9);
+const $$createType11 = $Create.Array($Create.Any);
+const $$createType12 = MailDetail.createFrom;
+const $$createType13 = MailItem.createFrom;
+const $$createType14 = $Create.Array($$createType13);

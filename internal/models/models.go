@@ -7,6 +7,7 @@ type AccountResponse struct {
 	ID               uint   `json:"id"`
 	Email            string `json:"email"`
 	Password         string `json:"password"`
+	CodexPassword    string `json:"codex_password"`
 	ClientID         string `json:"client_id"`
 	RefreshToken     string `json:"refresh_token"`
 	LastRefreshTime  string `json:"last_refresh_time"`
@@ -29,6 +30,8 @@ type AccountQuery struct {
 	Page        int    `json:"page"`
 	PageSize    int    `json:"page_size"`
 	ActiveOnly  bool   `json:"active_only"`
+	SortBy      string `json:"sort_by"`    // id | account_type | last_refresh | email
+	SortOrder   string `json:"sort_order"` // asc | desc
 }
 
 type AccountsResponse struct {
@@ -39,18 +42,20 @@ type AccountsResponse struct {
 }
 
 type CreateAccountRequest struct {
-	Email        string `json:"email"`
-	Password     string `json:"password"`
-	ClientID     string `json:"client_id"`
+	Email         string `json:"email"`
+	Password      string `json:"password"`
+	CodexPassword string `json:"codex_password"`
+	ClientID      string `json:"client_id"`
 	RefreshToken string `json:"refresh_token"`
 	AccountType  string `json:"account_type"`
 	Remark       string `json:"remark"`
 }
 
 type UpdateAccountRequest struct {
-	Email        string `json:"email"`
-	Password     string `json:"password"`
-	ClientID     string `json:"client_id"`
+	Email         string `json:"email"`
+	Password      string `json:"password"`
+	CodexPassword string `json:"codex_password"`
+	ClientID      string `json:"client_id"`
 	RefreshToken string `json:"refresh_token"`
 	AccountType  string `json:"account_type"`
 	Remark       string `json:"remark"`
@@ -96,6 +101,85 @@ type RefreshAllResult struct {
 	Success int      `json:"success"`
 	Failed  int      `json:"failed"`
 	Errors  []string `json:"errors"`
+}
+
+type CodexConfig struct {
+	Proxy            string `json:"proxy"`
+	OAuthClientID    string `json:"oauth_client_id"`
+	OAuthRedirectURI string `json:"oauth_redirect_uri"`
+}
+
+type CodexOAuthResult struct {
+	Success bool   `json:"success"`
+	JSON    string `json:"json"`
+	Error   string `json:"error"`
+}
+
+type CLIProxyConfig struct {
+	URL    string `json:"url"`
+	APIKey string `json:"api_key"`
+}
+
+type CLIProxyAuthFile struct {
+	ID             string `json:"id"`
+	AuthIndex      string `json:"auth_index"`
+	Name           string `json:"name"`
+	Type           string `json:"type"`
+	Provider       string `json:"provider"`
+	Label          string `json:"label"`
+	Status         string `json:"status"`
+	StatusMessage  string `json:"status_message"`
+	Disabled       bool   `json:"disabled"`
+	Unavailable    bool   `json:"unavailable"`
+	RuntimeOnly    bool   `json:"runtime_only"`
+	Source         string `json:"source"`
+	Size           int64  `json:"size"`
+	Email          string `json:"email,omitempty"`
+	AccountType    string `json:"account_type,omitempty"`
+	Account        string `json:"account,omitempty"`
+	CreatedAt      string `json:"created_at,omitempty"`
+	UpdatedAt      string `json:"updated_at,omitempty"`
+	LastRefresh    string `json:"last_refresh,omitempty"`
+	NextRetryAfter string `json:"next_retry_after,omitempty"`
+	Path           string `json:"path,omitempty"`
+	Priority       int    `json:"priority,omitempty"`
+	Note           string `json:"note,omitempty"`
+}
+
+type CLIProxyAuthFilesResult struct {
+	Files []CLIProxyAuthFile `json:"files"`
+}
+
+type SyncResult struct {
+	Success bool   `json:"success"`
+	Error   string `json:"error"`
+}
+
+type CLIProxyStatus struct {
+	Connected    bool   `json:"connected"`
+	StatsEnabled bool   `json:"stats_enabled"`
+	Error        string `json:"error"`
+}
+
+type CLIProxyModelStats struct {
+	TotalRequests int64 `json:"total_requests"`
+	TotalTokens   int64 `json:"total_tokens"`
+}
+
+type CLIProxyAPIStats struct {
+	TotalRequests int64                         `json:"total_requests"`
+	TotalTokens   int64                         `json:"total_tokens"`
+	Models        map[string]CLIProxyModelStats `json:"models"`
+}
+
+type CLIProxyUsage struct {
+	TotalRequests int64                       `json:"total_requests"`
+	SuccessCount  int64                       `json:"success_count"`
+	FailureCount  int64                       `json:"failure_count"`
+	TotalTokens   int64                       `json:"total_tokens"`
+	RequestsByDay map[string]int64            `json:"requests_by_day"`
+	TokensByDay   map[string]int64            `json:"tokens_by_day"`
+	APIs          map[string]CLIProxyAPIStats `json:"apis"`
 }
 
 // Mail types
