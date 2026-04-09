@@ -4,3 +4,4 @@ frontend/dist
 bin/
 .claude/
 .DS_Store
+.task/
